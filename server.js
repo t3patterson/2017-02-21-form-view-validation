@@ -1,13 +1,8 @@
 //WEBPACK -- configuration
-const webpack = require('webpack');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('./webpack.config.js');
-const webpackCompiler = webpack(webpackConfig)
-
-
-
-
-
+let webpack
+let webpackMiddleware
+let webpackConfig
+let webpackCompiler
 //IMPORTS
 //--------------
 //import express web server
@@ -15,12 +10,15 @@ const express = require('express')
 //import templating engine for rendering HTML
 const renderFile = require('ejs').renderFile
 
-
-
 //run the express app
 const app = express()
 
 if( process.env.NODE_ENV === 'development' ){
+	webpack = require('webpack');
+	webpackMiddleware = require('webpack-dev-middleware');
+	webpackConfig = require('./webpack.config.js');
+	webpackCompiler = webpack(webpackConfig)
+
 	console.log('using teh webpack!')
 	app.use(webpackMiddleware(webpackCompiler, {
 	   noInfo: true,
